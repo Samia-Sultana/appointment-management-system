@@ -11,10 +11,14 @@ use Illuminate\Support\Facades\Hash;
 class EmployeeController extends Controller
 {
     public function index(){
+
+        $this->authorize('viewAny', User::class);
         $roles = Role::all();
         return view('admin.createEmployee', compact('roles'));
     }
     public function create(Request $request){
+        
+        $this->authorize('create', User::class);
         $all = $request->all();
         $user = User::create([
             'name' => $all['name'],

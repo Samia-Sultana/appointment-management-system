@@ -159,7 +159,7 @@
 
                         </ul>
                     </li>
-
+                    @can('viewAny', \App\Models\User::class )
                     <li class="submenu">
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/product.svg')}}" alt="img"><span>
                                 Employee</span> <span class="menu-arrow"></span></a>
@@ -168,6 +168,7 @@
                             <li><a href="{{route('admin.rolePage')}}">Add Role</a></li>
                         </ul>
                     </li>
+                    @endcan
                 </ul>
             </div>
         </div>
