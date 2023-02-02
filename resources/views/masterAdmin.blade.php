@@ -32,6 +32,9 @@
 
 @include('admin.navigation')
 @yield('admin.dashboard')
+@yield('employee')
+@yield('role')
+@yield('appointment')
 
 
 

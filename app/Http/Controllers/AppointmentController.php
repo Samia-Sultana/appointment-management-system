@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class AppointmentController extends Controller
 {
-
-    
     /**
      * Display a listing of the resource.
      *
@@ -16,9 +14,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('admin.createRole');
-        
-        
+        $this->authorize('viewAny', Appointment::class);
+        return view('admin.createAppointment');
     }
 
     /**
@@ -28,11 +25,18 @@ class RoleController extends Controller
      */
     public function create(Request $request)
     {
-        Role::create([
-            'name' => $request->name,
+        $this->authorize('create', Appointment::class);
+
+        Appointment::create([
+            'name' => $request['name'],
+            'phone' => $request['phone'],
+            'age' => $request['age'],
+            'problem' => $request['problem'],
+            'chember_id' => $request['chember'],
+            'date' => $request['date'],
         ]);
-        return redirect()->route('admin.rolePage');
-        
+        return redirect()->route('admin.appointmentPage');
+
     }
 
     /**
@@ -49,10 +53,10 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(Appointment $appointment)
     {
         //
     }
@@ -60,10 +64,10 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit(Appointment $appointment)
     {
         //
     }
@@ -72,10 +76,10 @@ class RoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, Appointment $appointment)
     {
         //
     }
@@ -83,10 +87,10 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy(Appointment $appointment)
     {
         //
     }

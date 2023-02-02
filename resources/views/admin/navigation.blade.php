@@ -104,15 +104,17 @@
                         <a href="{{route('admin.dashboard')}}"><img src="{{asset('assets/img/icons/dashboard.svg')}}" alt="img"><span>
                                 Dashboard</span> </a>
                     </li>
+                    @can('viewAny', \App\Models\Appointment::class )
                     <li class="submenu">
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/product.svg')}}" alt="img"><span>
-                                Supplier</span> <span class="menu-arrow"></span></a>
+                                Appointment</span> <span class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="">Add Supplier</a></li>
-                            <li><a href="">Supplier List</a></li>
+                            <li><a href="{{route('admin.appointmentPage')}}">Create Appointment</a></li>
+                            <li><a href="">Appointment List</a></li>
 
                         </ul>
                     </li>
+                    @endcan
                     <li class="submenu">
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/product.svg')}}" alt="img"><span>
                                 Product</span> <span class="menu-arrow"></span></a>
@@ -162,8 +164,8 @@
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/product.svg')}}" alt="img"><span>
                                 Employee</span> <span class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="">Add Employee</a></li>
-                            <li><a href="">Add Role</a></li>
+                            <li><a href="{{route('admin.employeePage')}}">Add Employee</a></li>
+                            <li><a href="{{route('admin.rolePage')}}">Add Role</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use App\Models\Chember;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class ChemberController extends Controller
 {
-
-    
     /**
      * Display a listing of the resource.
      *
@@ -16,9 +14,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('admin.createRole');
-        
-        
+        //
     }
 
     /**
@@ -26,13 +22,9 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        Role::create([
-            'name' => $request->name,
-        ]);
-        return redirect()->route('admin.rolePage');
-        
+        //
     }
 
     /**
@@ -49,10 +41,10 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Chember  $chember
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(Chember $chember)
     {
         //
     }
@@ -60,10 +52,10 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Chember  $chember
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit(Chember $chember)
     {
         //
     }
@@ -72,10 +64,10 @@ class RoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Chember  $chember
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, Chember $chember)
     {
         //
     }
@@ -83,10 +75,10 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Chember  $chember
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy(Chember $chember)
     {
         //
     }
