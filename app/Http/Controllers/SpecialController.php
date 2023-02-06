@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Chember;
+use App\Models\Special;
 use Illuminate\Http\Request;
 
-class ChemberController extends Controller
+class SpecialController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ChemberController extends Controller
      */
     public function index()
     {
-        return view('admin.createChember');
+        return view('admin.createSpecialSchedule');
     }
 
     /**
@@ -24,13 +24,16 @@ class ChemberController extends Controller
      */
     public function create(Request $request)
     {
-        Chember::create([
-            'name' => $request->name,
-            'location' => $request->address,
-            'telephone' => $request->telephone
-        ]);
+        Special::create([
+            'date' => $request->date,
+            'chember_id' => $request->chember,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'patients_allowed' => $request->patients_allowed,
+            'slotOnOff' => $request->slot
 
-        return redirect()->route('admin.chemberPage');
+        ]);
+        return redirect()->route('admin.specialPage');
     }
 
     /**
@@ -47,22 +50,22 @@ class ChemberController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Chember  $chember
+     * @param  \App\Models\Special  $special
      * @return \Illuminate\Http\Response
      */
-    public function show(Chember $chember)
+    public function show(Special $special)
     {
-        $chembers = Chember::all();
-        return view('admin.chemberList', compact('chembers'));
+        $schedules = Special::all();
+        return view('admin.specialScheduleList', compact('schedules'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Chember  $chember
+     * @param  \App\Models\Special  $special
      * @return \Illuminate\Http\Response
      */
-    public function edit(Chember $chember)
+    public function edit(Special $special)
     {
         //
     }
@@ -71,10 +74,10 @@ class ChemberController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Chember  $chember
+     * @param  \App\Models\Special  $special
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Chember $chember)
+    public function update(Request $request, Special $special)
     {
         //
     }
@@ -82,10 +85,10 @@ class ChemberController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Chember  $chember
+     * @param  \App\Models\Special  $special
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Chember $chember)
+    public function destroy(Special $special)
     {
         //
     }

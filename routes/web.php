@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\ChemberController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\SpecialController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,9 +41,29 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/add/role', [RoleController::class, 'create'])->name('addRole');
         /*end employee */
 
+        /*Chember */
+        Route::get('/chember/page', [ChemberController::class, 'index'])->name('chemberPage');
+        Route::post('/add/chember', [ChemberController::class, 'create'])->name('addChember');
+        Route::get('/chember/list', [ChemberController::class, 'show'])->name('chemberList');
+        /*end Chember */
+
+        /*Schedule */
+        Route::get('/schedule/page', [ScheduleController::class, 'index'])->name('schedulePage');
+        Route::post('/add/schedule', [ScheduleController::class, 'create'])->name('addSchedule');
+        Route::get('/schedule/list', [ScheduleController::class, 'show'])->name('scheduleList');
+
+        Route::get('/special/page', [SpecialController::class, 'index'])->name('specialPage');
+        Route::post('/add/special/schedule', [SpecialController::class, 'create'])->name('addSpecialSchedule');
+        Route::get('/special/schedule/list', [SpecialController::class, 'show'])->name('specialScheduleList');
+        /*end Schedule */
+
         /*Appointment */
         Route::get('/appointment/page', [AppointmentController::class, 'index'])->name('appointmentPage');
+        Route::post('/search/schedule', [AppointmentController::class, 'searchSchedule'])->name('searchSchedule');
+        Route::post('/search/chember', [AppointmentController::class, 'searchChember'])->name('searchChember');
         Route::post('/add/appointment', [AppointmentController::class, 'create'])->name('addAppointment');
+        Route::get('/appintment/list', [AppointmentController::class, 'show'])->name('appointmentList');
+        
         /*end Appointment */
     });
 });

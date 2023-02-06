@@ -104,41 +104,45 @@
                         <a href="{{route('admin.dashboard')}}"><img src="{{asset('assets/img/icons/dashboard.svg')}}" alt="img"><span>
                                 Dashboard</span> </a>
                     </li>
+                   
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/product.svg')}}" alt="img"><span>
+                                Chember</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="{{route('admin.chemberPage')}}">Add Chember</a></li>
+                            <li><a href="{{route('admin.chemberList')}}">Chember List</a></li>
+                         
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/sales1.svg')}}" alt="img"><span>
+                                Schedule</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="{{route('admin.schedulePage')}}">Weekly Schedule </a></li>
+                            <li><a href="{{route('admin.scheduleList')}}">Schedule List</a></li>
+                            <li><a href="{{route('admin.specialPage')}}">Special Schedule</a></li>
+                            <li><a href="{{route('admin.specialScheduleList')}}">Special Schedule List</a></li>
+
+                        </ul>
+                    </li>
+
                     @can('viewAny', \App\Models\Appointment::class )
                     <li class="submenu">
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/product.svg')}}" alt="img"><span>
                                 Appointment</span> <span class="menu-arrow"></span></a>
                         <ul>
                             <li><a href="{{route('admin.appointmentPage')}}">Create Appointment</a></li>
-                            <li><a href="">Appointment List</a></li>
+                            <li><a href="{{route('admin.appointmentList')}}">Appointment List</a></li>
 
                         </ul>
                     </li>
                     @endcan
                     <li class="submenu">
-                        <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/product.svg')}}" alt="img"><span>
-                                Product</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                            <li><a href="">Add Product</a></li>
-                            <li><a href="">Product List</a></li>
-                            <li><a href="">Print Barcode</a></li>
-                        </ul>
-                    </li>
-                    <li class="submenu">
-                        <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/sales1.svg')}}" alt="img"><span>
-                                Order</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                            <li><a href="">Add Order </a></li>
-                            <li><a href="">Order List</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="submenu">
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/purchase1.svg')}}" alt="img"><span>
-                                Purchase</span> <span class="menu-arrow"></span></a>
+                                Patient History</span> <span class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="">Add Purchase</a></li>
-                            <li><a href="">Purchase List</a></li>
+                            <li><a href="">Add Report</a></li>
+                            <li><a href="">All Report</a></li>
 
                             <!--    <li><a href="importpurchase.html">Import Purchase</a></li>   --->
                         </ul>
@@ -148,11 +152,11 @@
 
                     <li class="submenu">
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/time.svg')}}" alt="img"><span>
-                                Report</span> <span class="menu-arrow"></span></a>
+                                Accounts</span> <span class="menu-arrow"></span></a>
                         <ul>
 
 
-                            <li><a href="">Sales Report</a></li>
+                            <li><a href=""></a></li>
 
                             <li><a href="">Purchase Report</a></li>
 

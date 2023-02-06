@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{asset('assets/plugins/owlcarousel/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/plugins/owlcarousel/owl.theme.default.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -34,7 +35,14 @@
 @yield('admin.dashboard')
 @yield('employee')
 @yield('role')
+@yield('chember')
 @yield('appointment')
+@yield('chemberList')
+@yield('schedule')
+@yield('scheduleList')
+@yield('special')
+@yield('specialList')
+@yield('appointmentList')
 
 
 
