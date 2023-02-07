@@ -145,6 +145,7 @@
             data: {date:date},
             success:function(data){
                 var schedule = JSON.parse(data.schedules);
+                var appointments = JSON.parse(data.totalAppointments);
                 var table = $("#scheduleResult");
                 table.empty();
                 $.each(schedule, function(index, item) {
@@ -155,6 +156,12 @@
             row.append($("<td>").text(item.chember_id));
             row.append($("<td>").text(item.slotOnOff));
             row.append($("<td>").text(item.patients_allowed));
+            var appointmentsForThatDateAndChember = appointments.filter( appointment =>{
+                if(appointment.date == date && appointment.chember_id == item.chember_id){
+                   return appointment; 
+                }
+            });
+            row.append($("<td>").text(appointmentsForThatDateAndChember.length));
             table.append(row);
         });
             }

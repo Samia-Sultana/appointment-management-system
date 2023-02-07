@@ -63,7 +63,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/search/chember', [AppointmentController::class, 'searchChember'])->name('searchChember');
         Route::post('/add/appointment', [AppointmentController::class, 'create'])->name('addAppointment');
         Route::get('/appintment/list', [AppointmentController::class, 'show'])->name('appointmentList');
-        
+        Route::post('/cancel/appointment', [AppointmentController::class, 'cancelAppointment'])->name('cancelAppointment');
+        Route::get('/cancelled/appintment/list', [AppointmentController::class, 'cancelledAppointment'])->name('cancelledAppointment');
+        Route::post('/pay/visit', [AppointmentController::class, 'payVisit'])->name('payVisit');
         /*end Appointment */
     });
 });

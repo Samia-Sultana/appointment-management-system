@@ -1,5 +1,5 @@
 @extends('masterAdmin')
-@section('appointmentList')
+@section('cancelledAppointmentList')
 
     <div class="main-wrapper">
 
@@ -88,8 +88,9 @@
                                         <th>Chember</th>
                                         <th>Patient</th>
                                         <th>Phone</th>
-                                        <th>Serial No</th>
-                                        <th>Status</th>
+                                        <th>Age</th>
+                                        <th>Problem</th>
+                                        <th>Serial no</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -107,47 +108,18 @@
                                         <td>{{$appointment->chember_name}}</td>
                                        <td>{{$appointment->name}}</td>
                                        <td>{{$appointment->phone}}</td>
+                                       <td>{{$appointment->age}}</td>
+                                       <td>{{$appointment->problem}}</td>
                                        <td>{{$appointment->serial_no}}</td>
-                                       <td>{{$appointment->status}}</td>
                                        <td>
-                                       <form action="{{route('admin.cancelAppointment')}}" method="post">
+                                       
+
+                                        <form action="" method="post">
                                             @csrf
                                             <input type="hidden" value="{{$appointment->id}}" name="appointment_id">
-                                            <button type="submit" class="btn btn-danger btn-delete-supplier"> <i class='fa fa-close teal-color'></i></button>
+                                            <button type="submit" >Delete </button>
+
                                         </form>
-
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="{{'#update_supplier_'.$appointment->id}}">
-                                        <i class="fas fa-money-bill-alt"></i>
-                                        </button>
-                                        <div class="modal fade" id="{{'update_supplier_' . $appointment->id}}" tabindex="-1" role="dialog" aria-labelledby="update_product_lebel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="update_supplier_lebel">Make Payment</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form method="POST" action="{{route('admin.payVisit')}}" class="d-flex">
-                                                            @csrf
-                                                            <div class="p-1">
-                                                                <input type="hidden" id="update_supplierId" name="appointment_id" value="{{$appointment->id}}">
-                                                                <label>Amount</label>
-                                                                <input type="text" id="amount" name="amount" ><br><br>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary btn-update-supplier">Pay</button>
-                                                            </div>
-
-                                                        </form>
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
                                        </td>
                                     </tr>
                                     @endforeach
@@ -165,6 +137,10 @@
             </div>
         </div>
     </div>
+
+
+
+
 
 
    

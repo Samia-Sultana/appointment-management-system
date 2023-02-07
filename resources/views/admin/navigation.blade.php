@@ -133,7 +133,7 @@
                         <ul>
                             <li><a href="{{route('admin.appointmentPage')}}">Create Appointment</a></li>
                             <li><a href="{{route('admin.appointmentList')}}">Appointment List</a></li>
-
+                            <li><a href="{{route('admin.cancelledAppointment')}}">Cancelled Appointments</a></li>
                         </ul>
                     </li>
                     @endcan

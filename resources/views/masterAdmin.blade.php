@@ -43,6 +43,7 @@
 @yield('special')
 @yield('specialList')
 @yield('appointmentList')
+@yield('cancelledAppointmentList')
 
 
 

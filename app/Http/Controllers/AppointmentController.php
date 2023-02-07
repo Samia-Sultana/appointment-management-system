@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Payment;
 use App\Models\Schedule;
 use App\Models\Special;
 use Carbon\Carbon;
@@ -30,7 +31,7 @@ class AppointmentController extends Controller
     public function create(Request $request)
     {
         $this->authorize('create', Appointment::class);
-
+        $totalAppointmentsOfTheDay = Appointment::where('date' ,$request['date'] )->where('chember_id', $request['chember'] )->get();
         Appointment::create([
             'name' => $request['name'],
             'phone' => $request['phone'],
@@ -38,6 +39,7 @@ class AppointmentController extends Controller
             'problem' => $request['problem'],
             'chember_id' => $request['chember'],
             'date' => $request['date'],
+            'serial_no' => count($totalAppointmentsOfTheDay) + 1,
         ]);
         return redirect()->route('admin.appointmentPage');
     }
@@ -66,7 +68,7 @@ class AppointmentController extends Controller
         $appointments = DB::table('appointments')
         ->join('chembers', 'appointments.chember_id', '=', 'chembers.id')
         ->select('appointments.*', DB::raw("chembers.name AS chember_name"))
-        ->get();
+        ->whereNull('deleted_at')->get();
       
         return view('admin.appointmentList', compact('appointments'));
     }
@@ -110,13 +112,14 @@ class AppointmentController extends Controller
         //$this->authorize('create', Appointment::class);
 
         $specialSchedule = Special::where('date', $request->date)->get();
+        $totalAppointmentsOfTheDay = Appointment::where('date', $request->date)->get();
         if (count($specialSchedule) > 0) {
-            return response()->json(['schedules' => json_encode($specialSchedule)]);
+            return response()->json(['schedules' => json_encode($specialSchedule), 'totalAppointments' => json_encode($totalAppointmentsOfTheDay)]);
         } else {
             $dateInstance = Carbon::parse($request->date);
             $day = $dateInstance->format('l');
             $regularSchedule = Schedule::where('day', $day)->get();
-            return response()->json(['schedules' => json_encode($regularSchedule)]);
+            return response()->json(['schedules' => json_encode($regularSchedule), 'totalAppointments' => json_encode($totalAppointmentsOfTheDay)]);
         }
     }
 
@@ -142,5 +145,35 @@ class AppointmentController extends Controller
                 ->get();
             return response()->json(['chembers' => json_encode($regularSchedule)]);
         }
+    }
+    public function cancelAppointment(Request $request)
+    {
+        $record = Appointment::findOrFail($request->appointment_id);
+        $record->delete();
+
+        return redirect()->route('admin.appointmentList');
+    }
+
+    public function cancelledAppointment()
+    {
+
+        $appointments = DB::table('appointments')
+        ->join('chembers', 'appointments.chember_id', '=', 'chembers.id')
+        ->select('appointments.*', DB::raw("chembers.name AS chember_name"))
+        ->whereNotNull('appointments.deleted_at')->get();
+
+        return view('admin.cancelledAppointmentList', compact('appointments'));
+    }
+
+    public function payVisit(Request $request){
+        Payment::create([
+            'appointment_id' => $request->appointment_id,
+            'amount' => $request->amount,
+        ]);
+        Appointment::find($request->appointment_id)->update([
+            'status' => "visited"
+        ]);
+        return redirect()->route('admin.appointmentList');
+
     }
 }
