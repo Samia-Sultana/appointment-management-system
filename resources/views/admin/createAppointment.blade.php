@@ -51,12 +51,12 @@
 
 
                 <div class="row">
-                <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label>Date</label>
-                                <input type="date" name="date" id="date" class="date">
-                            </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" name="date" id="date" class="date">
                         </div>
+                    </div>
                     <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label>Chember</label>
@@ -67,8 +67,9 @@
                     </div>
 
                 </div>
+                
                 <div class="row">
-                    
+
                 </div>
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 col-12">
@@ -190,12 +191,17 @@
                 var chembers = JSON.parse(data.chembers);
                 var select = $("#chember");
                 select.empty(); // remove existing options
+                var choose = $("<option>").val('choose').text('Choose...');
+                select.append(choose);
                 $.each(chembers, function(index, item) {
                 var option = $("<option>").val(item.id).text(item.name);
                 select.append(option);
         }); 
             }
         });
+
+
+        
         
 
     });
