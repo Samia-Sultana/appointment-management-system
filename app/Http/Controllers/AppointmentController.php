@@ -6,6 +6,8 @@ use App\Models\Appointment;
 use App\Models\Payment;
 use App\Models\Schedule;
 use App\Models\Special;
+use App\Models\Patient;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +33,9 @@ class AppointmentController extends Controller
     public function create(Request $request)
     {
         $this->authorize('create', Appointment::class);
+
         $totalAppointmentsOfTheDay = Appointment::where('date' ,$request['date'] )->where('chember_id', $request['chember'] )->get();
+
         Appointment::create([
             'name' => $request['name'],
             'phone' => $request['phone'],
@@ -41,6 +45,8 @@ class AppointmentController extends Controller
             'date' => $request['date'],
             'serial_no' => count($totalAppointmentsOfTheDay) + 1,
         ]);
+
+        
         return redirect()->route('admin.appointmentPage');
     }
 
@@ -166,13 +172,23 @@ class AppointmentController extends Controller
     }
 
     public function payVisit(Request $request){
+
         Payment::create([
             'appointment_id' => $request->appointment_id,
             'amount' => $request->amount,
         ]);
+
         Appointment::find($request->appointment_id)->update([
             'status' => "visited"
         ]);
+
+        $patientData = Appointment::find($request->appointment_id);
+        
+        Patient::create([
+            'patients_name' => $patientData->name,
+            'patients_phone' => $patientData->phone,
+        ]);
+        
         return redirect()->route('admin.appointmentList');
 
     }
