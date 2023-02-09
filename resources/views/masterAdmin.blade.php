@@ -44,6 +44,9 @@
 @yield('specialList')
 @yield('appointmentList')
 @yield('cancelledAppointmentList')
+@yield('addReport')
+@yield('reportImageView')
+@yield('patientReportDetails')
 
 
 

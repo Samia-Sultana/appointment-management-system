@@ -7,6 +7,8 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SpecialController;
+use App\Http\Controllers\PatientController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,6 +69,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/cancelled/appintment/list', [AppointmentController::class, 'cancelledAppointment'])->name('cancelledAppointment');
         Route::post('/pay/visit', [AppointmentController::class, 'payVisit'])->name('payVisit');
         /*end Appointment */
+
+        /*Add Patient Report*/
+        Route::get('/addReport/page', [PatientController::class, 'index'])->name('viewAddReport');
+        Route::get('/addReportImage/page/{id}', [ReportController::class, 'addReportView'])->name('addReportView');
+        Route::post('/addReportImage/page', [ReportController::class, 'saveMultipleReport'])->name('saveMultipleReportImage');
+        Route::get('/addReportImage/details/{id}', [ReportController::class, 'patientReportDetails'])->name('patientReportDetails');
+
+        /*end Patient Report */
+
     });
 });
 

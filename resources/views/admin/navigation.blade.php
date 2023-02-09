@@ -1,9 +1,7 @@
 
 
 
-<div id="global-loader">
-    <div class="whirly-loader"> </div>
-</div>
+
 
 <div class="main-wrapper">
 
@@ -141,7 +139,7 @@
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/purchase1.svg')}}" alt="img"><span>
                                 Patient History</span> <span class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="">Add Report</a></li>
+                            <li><a href="{{ route('admin.viewAddReport') }}">Add Report</a></li>
                             <li><a href="">All Report</a></li>
 
                             <!--    <li><a href="importpurchase.html">Import Purchase</a></li>   --->
