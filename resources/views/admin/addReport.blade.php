@@ -111,7 +111,7 @@
                                         <!-- Button trigger modal -->
                                         <a href="{{ route('admin.addReportView' , $data->id) }}">
                                             <button type="button" class="btn btn-primary">
-                                                Add Report
+                                                Report
                                             </button>
                                         </a>
 

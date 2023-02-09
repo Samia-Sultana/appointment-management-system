@@ -139,8 +139,8 @@
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/purchase1.svg')}}" alt="img"><span>
                                 Patient History</span> <span class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="{{ route('admin.viewAddReport') }}">Add Report</a></li>
-                            <li><a href="">All Report</a></li>
+                            <li><a href="{{ route('admin.viewAddReport') }}">Patient Report</a></li>
+                            
 
                             <!--    <li><a href="importpurchase.html">Import Purchase</a></li>   --->
                         </ul>
