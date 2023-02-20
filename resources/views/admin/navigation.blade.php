@@ -138,11 +138,14 @@
                     <li class="submenu">
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/purchase1.svg')}}" alt="img"><span>
                                 Patient History</span> <span class="menu-arrow"></span></a>
+
+                        @can('viewAny', \App\Models\Appointment::class )
                         <ul>
                             <li><a href="{{ route('admin.viewAddReport') }}">Patient Report</a></li>
-                            
-
-                            <!--    <li><a href="importpurchase.html">Import Purchase</a></li>   --->
+                        </ul>
+                        @endcan
+                        <ul>
+                            <li><a href="{{ route('admin.addReportView', Auth::guard('web')->user()->id) }}">Patient Report</a></li>
                         </ul>
                     </li>
 
