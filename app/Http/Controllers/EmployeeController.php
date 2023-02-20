@@ -25,6 +25,7 @@ class EmployeeController extends Controller
             'email' => $all['email'],
             'password' => Hash::make($all['password']),
             'role_id' => $all['role'],
+            'is_admin' => true,
         ]);
        
 

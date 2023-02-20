@@ -25,17 +25,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/dashboard', function () {
+    return view('admin.dashboard');
+})->middleware('auth')->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
+
+
     Route::group([
         'prefix' => 'admin',
+        'middleware' => 'is_admin',
         'as' => 'admin.'
     ], function () {
-
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
-
         /*Employee */
         Route::get('/employee/page', [EmployeeController::class, 'index'])->name('employeePage');
         Route::post('/add/employee', [EmployeeController::class, 'create'])->name('addEmployee');
@@ -77,6 +78,19 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/addReportImage/details/{id}', [ReportController::class, 'patientReportDetails'])->name('patientReportDetails');
 
         /*end Patient Report */
+
+        
+
+    });
+
+    Route::group([
+        'prefix' => 'user',
+        'as' => 'user.'
+    ], function () {
+
+     
+
+        
 
     });
 });

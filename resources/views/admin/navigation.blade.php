@@ -97,12 +97,13 @@
     <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
+                @if(Auth::guard('web')->user()->is_admin == 1)
                 <ul>
                     <li class="active">
-                        <a href="{{route('admin.dashboard')}}"><img src="{{asset('assets/img/icons/dashboard.svg')}}" alt="img"><span>
+                        <a href="{{route('dashboard')}}"><img src="{{asset('assets/img/icons/dashboard.svg')}}" alt="img"><span>
                                 Dashboard</span> </a>
                     </li>
-                   
+                    @can('viewAny', \App\Models\Appointment::class )
                     <li class="submenu">
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/product.svg')}}" alt="img"><span>
                                 Chember</span> <span class="menu-arrow"></span></a>
@@ -112,6 +113,8 @@
                          
                         </ul>
                     </li>
+                    @endcan
+                    @can('viewAny', \App\Models\Appointment::class )
                     <li class="submenu">
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/sales1.svg')}}" alt="img"><span>
                                 Schedule</span> <span class="menu-arrow"></span></a>
@@ -123,6 +126,7 @@
 
                         </ul>
                     </li>
+                    @endcan
 
                     @can('viewAny', \App\Models\Appointment::class )
                     <li class="submenu">
@@ -135,21 +139,22 @@
                         </ul>
                     </li>
                     @endcan
+                    @can('viewAny', \App\Models\Appointment::class )
                     <li class="submenu">
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/purchase1.svg')}}" alt="img"><span>
                                 Patient History</span> <span class="menu-arrow"></span></a>
 
-                        @can('viewAny', \App\Models\Appointment::class )
+                        
                         <ul>
                             <li><a href="{{ route('admin.viewAddReport') }}">Patient Report</a></li>
                         </ul>
-                        @endcan
+                        
                         <ul>
                             <li><a href="{{ route('admin.addReportView', Auth::guard('web')->user()->id) }}">Patient Report</a></li>
                         </ul>
                     </li>
-
-
+                    @endcan
+                    @can('viewAny', \App\Models\Appointment::class )
 
                     <li class="submenu">
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/time.svg')}}" alt="img"><span>
@@ -164,6 +169,7 @@
 
                         </ul>
                     </li>
+                    @endcan
                     @can('viewAny', \App\Models\User::class )
                     <li class="submenu">
                         <a href="javascript:void(0);"><img src="{{asset('assets/img/icons/product.svg')}}" alt="img"><span>
@@ -174,7 +180,14 @@
                         </ul>
                     </li>
                     @endcan
+                    @elseif(Auth::guard('web')->user()->is_admin == 0)
+                    <li><a href="{{route('admin.employeePage')}}">Profile</a></li>
+                    <li><a href="{{route('admin.employeePage')}}">Appointments</a></li>
+                    <li><a href="{{route('admin.employeePage')}}">Reports</a></li>
+                    
+                    @endif
                 </ul>
+              
             </div>
         </div>
     </div>
