@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/appointment/page', [AppointmentController::class, 'index'])->name('appointmentPage');
         Route::post('/search/schedule', [AppointmentController::class, 'searchSchedule'])->name('searchSchedule');
         Route::post('/search/chember', [AppointmentController::class, 'searchChember'])->name('searchChember');
+        Route::post('/search/slot', [AppointmentController::class, 'searchSlot'])->name('searchSlot');
         Route::post('/add/appointment', [AppointmentController::class, 'create'])->name('addAppointment');
         Route::get('/appintment/list', [AppointmentController::class, 'show'])->name('appointmentList');
         Route::post('/cancel/appointment', [AppointmentController::class, 'cancelAppointment'])->name('cancelAppointment');

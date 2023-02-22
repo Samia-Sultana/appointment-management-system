@@ -66,8 +66,15 @@
                         </div>
                     </div>
 
+
                 </div>
-                
+                <div class="row d-flex flex-row" id = "slot-view">
+
+
+
+
+                </div>
+
                 <div class="row">
 
                 </div>
@@ -175,7 +182,7 @@
     $(".date").on("change", function() {
         var $select = $(this);
         var date = $select.val();
-        console.log(date);
+        
 
         $.ajaxSetup({
        headers: {
@@ -196,6 +203,9 @@
                 $.each(chembers, function(index, item) {
                 var option = $("<option>").val(item.id).text(item.name);
                 select.append(option);
+
+                
+
         }); 
             }
         });
@@ -205,9 +215,99 @@
         
 
     });
+
+    $(function() {
+        //event bubbling concept
+    $('body').on('change', '#chember', function() {
+    const chemberId = $(this).val();
+    const date = $(this).parents('.row').find('input#date').val();
+
+    $.ajaxSetup({
+       headers: {
+           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type:'POST',
+            url:"{{route('admin.searchSlot')}}",
+            data: {date:date, chemberId:chemberId},
+            success:function(data){
+                var schedule = JSON.parse(data.schedule);
+                
+               if(schedule[0].slotOnOff == 'withSlot'){
+                let startTimeArray = schedule[0].start_time.split(":");
+                let startTime = new Date();
+                startTime.setHours(startTimeArray[0]);
+                startTime.setMinutes(startTimeArray[1]);
+                let endTimeArray = schedule[0].end_time.split(":");
+                let endTime = new Date();
+                endTime.setHours(endTimeArray[0]);
+                endTime.setMinutes(endTimeArray[1]);
+
+
+                let durationMs = endTime - startTime;
+                let durationMinutes = Math.floor(durationMs / 60000); // 1 minute = 60000 milliseconds
+                var slots = Math.ceil(durationMinutes / schedule[0].patients_allowed);
+                console.log( slots );
+
+                var slotView = $(this).parents('.row').next('.slot-view');
+                slotView.empty();
+                for(var i = 0;i<slots ; i++){
+                    let outerDiv = document.createElement('div');
+                outerDiv.className = 'col-lg-3 col-sm-6 col-12';
+
+                let innerDiv = document.createElement('div');
+                innerDiv.className = 'form-group';
+
+                let inputTag = document.createElement('input');
+                inputTag.setAttribute('type', 'radio');
+                inputTag.setAttribute('name', 'slotInput');
+                inputTag.setAttribute('value', i+1 );
+
+                var slotTime = durationMinutes/slots;
+                var slotStart = new Date(startTime.getTime() + slotTime * i * 60000);
+                var slotEnd = new Date(startTime.getTime() + (slotTime * (i + 1) * 60000));
+
+                var slotStartStr = slotStart.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                var slotEndStr = slotEnd.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                let label = document.createElement("label");
+                label.innerText = slotStartStr + '-' + slotEndStr ;
+                
+                innerDiv.appendChild(inputTag);
+                innerDiv.appendChild(label);
+
+                //innerDiv.appendChild(label);
+                outerDiv.appendChild(innerDiv);
+                let container = document.getElementById("slot-view");
+                container.appendChild(outerDiv);
+
+                }
+               
+
+               }
+
+            }
+                
+                
+
+        }); 
+
+    
+  });
+});
+
     
     
     
+    
+
+</script>
+<script>
+
+
+
+
 
 </script>
 

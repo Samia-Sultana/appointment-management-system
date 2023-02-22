@@ -192,4 +192,20 @@ class AppointmentController extends Controller
         return redirect()->route('admin.appointmentList');
 
     }
+    public function searchSlot(Request $request){
+        $specialSchedule = Special::where('date', $request->date)->where('chember_id', $request->chemberId)->get();
+        $appointments = Appointment::where('date', $request->date)->where('chember_id', $request->chemberId)->get();
+        if (count($specialSchedule) > 0) {
+            return response()->json(['schedule' => json_encode($specialSchedule), 'appointments' => json_decode($appointments)]);
+            
+        } else {
+            $dateInstance = Carbon::parse($request->date);
+            $day = $dateInstance->format('l');
+            $regularSchedule = Schedule::where('day', $day)->where('chember_id', $request->id)->get();
+            return response()->json(['schedule' => json_encode($regularSchedule), 'appointments' => json_decode($appointments)]);
+            
+        }
+    
+
+    }
 }
