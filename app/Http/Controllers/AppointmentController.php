@@ -33,8 +33,14 @@ class AppointmentController extends Controller
     public function create(Request $request)
     {
         $this->authorize('create', Appointment::class);
-
-        $totalAppointmentsOfTheDay = Appointment::where('date' ,$request['date'] )->where('chember_id', $request['chember'] )->get();
+        if($request['slotInput'] == null){
+            $totalAppointmentsOfTheDay = Appointment::where('date' ,$request['date'] )->where('chember_id', $request['chember'] )->get();
+            $serial =  count($totalAppointmentsOfTheDay) + 1;
+        }
+        else{
+            $serial = $request['slotInput'];
+        }
+        
 
         Appointment::create([
             'name' => $request['name'],
@@ -43,7 +49,7 @@ class AppointmentController extends Controller
             'problem' => $request['problem'],
             'chember_id' => $request['chember'],
             'date' => $request['date'],
-            'serial_no' => count($totalAppointmentsOfTheDay) + 1,
+            'serial_no' => $serial,
         ]);
 
         
@@ -131,7 +137,7 @@ class AppointmentController extends Controller
 
     public function searchChember(Request $request)
     {
-        //$this->authorize('create', Appointment::class);
+       
         $specialSchedule = DB::table('specials')
             ->join('chembers', 'specials.chember_id', '=', 'chembers.id')
             ->select('specials.date', 'chembers.id', 'chembers.name')
@@ -195,17 +201,89 @@ class AppointmentController extends Controller
     public function searchSlot(Request $request){
         $specialSchedule = Special::where('date', $request->date)->where('chember_id', $request->chemberId)->get();
         $appointments = Appointment::where('date', $request->date)->where('chember_id', $request->chemberId)->get();
+
         if (count($specialSchedule) > 0) {
             return response()->json(['schedule' => json_encode($specialSchedule), 'appointments' => json_decode($appointments)]);
             
         } else {
             $dateInstance = Carbon::parse($request->date);
             $day = $dateInstance->format('l');
-            $regularSchedule = Schedule::where('day', $day)->where('chember_id', $request->id)->get();
+            $regularSchedule = Schedule::where('day', $day)->where('chember_id', $request->chemberId)->get();
             return response()->json(['schedule' => json_encode($regularSchedule), 'appointments' => json_decode($appointments)]);
             
         }
     
 
     }
+    public function takeAppointment()
+    {
+        
+        return view('takeAppointment');
+    }
+
+    public function userSearchChember(Request $request)
+    {
+       
+        $specialSchedule = DB::table('specials')
+            ->join('chembers', 'specials.chember_id', '=', 'chembers.id')
+            ->select('specials.date', 'chembers.id', 'chembers.name')
+            ->where('specials.date', "=", $request->date)
+            ->get();
+        if (count($specialSchedule) > 0) {
+
+            return response()->json(['chembers' => json_encode($specialSchedule)]);
+        } else {
+            $dateInstance = Carbon::parse($request->date);
+            $day = $dateInstance->format('l');
+
+            $regularSchedule = DB::table('schedules')
+                ->join('chembers', 'schedules.chember_id', '=', 'chembers.id')
+                ->select('schedules.day', 'chembers.id', 'chembers.name')
+                ->where('schedules.day', "=", $day)
+                ->get();
+            return response()->json(['chembers' => json_encode($regularSchedule)]);
+        }
+    }
+    public function userSearchSlot(Request $request){
+        $specialSchedule = Special::where('date', $request->date)->where('chember_id', $request->chemberId)->get();
+        $appointments = Appointment::where('date', $request->date)->where('chember_id', $request->chemberId)->get();
+
+        if (count($specialSchedule) > 0) {
+            return response()->json(['schedule' => json_encode($specialSchedule), 'appointments' => json_decode($appointments)]);
+            
+        } else {
+            $dateInstance = Carbon::parse($request->date);
+            $day = $dateInstance->format('l');
+            $regularSchedule = Schedule::where('day', $day)->where('chember_id', $request->chemberId)->get();
+            return response()->json(['schedule' => json_encode($regularSchedule), 'appointments' => json_decode($appointments)]);
+            
+        }
+    
+
+    }
+    public function userCreateAppointment(Request $request)
+    {
+        if($request['slotInput'] == null){
+            $totalAppointmentsOfTheDay = Appointment::where('date' ,$request['date'] )->where('chember_id', $request['chember'] )->get();
+            $serial =  count($totalAppointmentsOfTheDay) + 1;
+        }
+        else{
+            $serial = $request['slotInput'];
+        }
+        
+
+        Appointment::create([
+            'name' => $request['name'],
+            'phone' => $request['phone'],
+            'age' => $request['age'],
+            'problem' => $request['problem'],
+            'chember_id' => $request['chember'],
+            'date' => $request['date'],
+            'serial_no' => $serial,
+        ]);
+
+        
+        return view('welcome');
+    }
+
 }

@@ -25,6 +25,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/take/appointment', [AppointmentController::class, 'takeAppointment'])->name('takeAppointment');
+Route::post('/search/chember', [AppointmentController::class, 'userSearchChember'])->name('userSearchChember');
+Route::post('/search/slot', [AppointmentController::class, 'userSearchSlot'])->name('userSearchSlot');
+Route::post('/add/appointment', [AppointmentController::class, 'userCreateAppointment'])->name('userCreateAppointment');
+
+
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware('auth')->name('dashboard');

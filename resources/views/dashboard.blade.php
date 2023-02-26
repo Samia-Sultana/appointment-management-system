@@ -4,6 +4,13 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
+    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger">
+                                            logout
+                                        </button>
+
+                                    </form>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

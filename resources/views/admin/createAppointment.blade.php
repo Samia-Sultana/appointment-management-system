@@ -219,6 +219,9 @@
     $(function() {
         //event bubbling concept
     $('body').on('change', '#chember', function() {
+        var slotView = $(this).parents('.row').next('#slot-view');
+        slotView.empty();
+
     const chemberId = $(this).val();
     const date = $(this).parents('.row').find('input#date').val();
 
@@ -234,8 +237,12 @@
             data: {date:date, chemberId:chemberId},
             success:function(data){
                 var schedule = JSON.parse(data.schedule);
-                
+                console.log(schedule);
+            
                if(schedule[0].slotOnOff == 'withSlot'){
+                
+                let serialNumbers = data.appointments.map(item => parseInt(item.serial_no));
+                console.log(serialNumbers);
                 let startTimeArray = schedule[0].start_time.split(":");
                 let startTime = new Date();
                 startTime.setHours(startTimeArray[0]);
@@ -244,17 +251,15 @@
                 let endTime = new Date();
                 endTime.setHours(endTimeArray[0]);
                 endTime.setMinutes(endTimeArray[1]);
-
-
                 let durationMs = endTime - startTime;
                 let durationMinutes = Math.floor(durationMs / 60000); // 1 minute = 60000 milliseconds
                 var slots = Math.ceil(durationMinutes / schedule[0].patients_allowed);
-                console.log( slots );
+                
 
-                var slotView = $(this).parents('.row').next('.slot-view');
-                slotView.empty();
+                
                 for(var i = 0;i<slots ; i++){
-                    let outerDiv = document.createElement('div');
+                       
+                let outerDiv = document.createElement('div');
                 outerDiv.className = 'col-lg-3 col-sm-6 col-12';
 
                 let innerDiv = document.createElement('div');
@@ -264,6 +269,13 @@
                 inputTag.setAttribute('type', 'radio');
                 inputTag.setAttribute('name', 'slotInput');
                 inputTag.setAttribute('value', i+1 );
+                if(serialNumbers.includes(i+1)){
+                    
+                    inputTag.setAttribute('disabled', 'disabled');
+                    innerDiv.style.backgroundColor = 'red';
+                }
+               
+
 
                 var slotTime = durationMinutes/slots;
                 var slotStart = new Date(startTime.getTime() + slotTime * i * 60000);
@@ -281,6 +293,9 @@
                 outerDiv.appendChild(innerDiv);
                 let container = document.getElementById("slot-view");
                 container.appendChild(outerDiv);
+
+                    
+                    
 
                 }
                
